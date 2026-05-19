@@ -4,7 +4,7 @@ CNS Manager is a diagnostic and self-service tool that helps detect and auto-rem
 CNS Manager exposes APIs that can be invoked by authorized users to detect issues.  
 
 
-This repository provides artifacts for deploying CNS manager in vanilla Kubernetes cluster, as well as the client sdk to invoke its endpoints.
+This repository provides artifacts for deploying CNS manager in Vanilla Kubernetes cluster, as well as the client sdk to invoke its endpoints.
 
 ## Deploying cns-manager
 CNS manager needs to be deployed in one of the Kubernetes clusters in the vCenter.  
