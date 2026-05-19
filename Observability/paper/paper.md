@@ -323,7 +323,7 @@ sub-minute event-to-signal latency for every CSI driver in a
 heterogeneous cluster without per-driver engineering effort. We see
 this portability as the subsystem's principal contribution.
 
-# Adoption and community engagement
+# Research impact statement
 
 CNS Manager has been publicly developed since August 2022 under the
 upstream `vmware-samples/cloud-native-storage-self-service-manager`
