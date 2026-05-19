@@ -1,0 +1,44 @@
+# Prometheus ConfigMap patch for the vSphere CSI driver profile.
+#
+# Apply with:
+#   kubectl patch configmap prometheus-config -n csi-driver-monitoring \
+#     --patch "$(cat driver-profiles/vsphere/prometheus-patch.yaml)"
+#
+# This adds two scrape jobs for the vSphere CSI driver's additional metric
+# endpoints. The standard csi-driver-sidecars job in the base configmap
+# should also point at the vSphere controller service on the sidecar port.
+#
+# Replace vmware-system-csi with your actual CSI driver namespace if different.
+
+# NOTE: This is a documentation / reference file.
+# For a kustomize-based patch, create a kustomize overlay that merges
+# this additional scrape config into the base prometheus.yml ConfigMap.
+#
+# The scrape jobs to add under scrape_configs in prometheus.yml:
+
+# ── vSphere CSI Controller — port 2112 ──────────────────────────────────────
+# Captures: vsphere_csi_volume_ops_histogram (optype, voltype, status, faulttype),
+#           vsphere_cns_volume_ops_histogram, vsphere_request_ops_seconds,
+#           vsphere_volume_health_gauge, vsphere_csi_info
+#
+# - job_name: vsphere-csi-controller
+#   scrape_interval: 60s
+#   static_configs:
+#     - targets:
+#         - vsphere-csi-controller.vmware-system-csi.svc.cluster.local:2112
+#       labels:
+#         driver_name: csi.vsphere.vmware.com
+#         component: csi-controller
+#
+# ── vSphere Syncer — port 2113 ───────────────────────────────────────────────
+# Captures: vsphere_full_sync_ops_histogram, vsphere_cns_volume_pv_missing,
+#           vsphere_syncer_info
+#
+# - job_name: vsphere-csi-syncer
+#   scrape_interval: 60s
+#   static_configs:
+#     - targets:
+#         - vsphere-csi-controller.vmware-system-csi.svc.cluster.local:2113
+#       labels:
+#         driver_name: csi.vsphere.vmware.com
+#         component: syncer

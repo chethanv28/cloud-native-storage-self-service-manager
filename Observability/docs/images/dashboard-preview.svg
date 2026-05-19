@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" role="img" aria-label="CSI Driver Volume Operations Dashboard preview">
+  <rect width="900" height="560" fill="#0d1117"/>
+  <text x="22" y="36" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="17" font-weight="600" fill="#e6edf3">CSI Driver — Volume Operations Dashboard</text>
+  <text x="22" y="54" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#8b949e">Metric: csi_sidecar_operations_seconds  ·  any Kubernetes CSI driver  ·  last 1 h  ·  scenario: Normal</text>
+  <rect x="708" y="20" width="56" height="20" rx="10" fill="#3fb95018" stroke="#3fb950" stroke-width="1"/>
+  <text x="736" y="34" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="#3fb950" text-anchor="middle">Normal</text>
+  <rect x="770" y="20" width="62" height="20" rx="10" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="801" y="34" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#8b949e" text-anchor="middle">Degraded</text>
+  <rect x="838" y="20" width="52" height="20" rx="10" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="864" y="34" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#8b949e" text-anchor="middle">Failing</text>
+  <rect x="22" y="64" width="856" height="26" rx="5" fill="#3fb95010"/>
+  <rect x="22" y="64" width="3" height="26" rx="1" fill="#3fb950"/>
+  <text x="34" y="81" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#3fb950">Healthy</text>
+  <text x="96" y="81" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#3fb950">  All operations within SLA. Error rate &lt; 2%. Latency nominal.</text>
+  <rect x="22" y="102" width="202" height="72" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="38" y="140" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#e6edf3">19.8</text>
+  <text x="38" y="160" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#8b949e">Total ops / min</text>
+  <rect x="232" y="102" width="202" height="72" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="248" y="140" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#3fb950">1.5%</text>
+  <text x="248" y="160" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#8b949e">Error rate</text>
+  <rect x="442" y="102" width="202" height="72" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="458" y="140" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#e6edf3">1</text>
+  <text x="458" y="160" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#8b949e">Active drivers</text>
+  <rect x="652" y="102" width="226" height="72" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="668" y="140" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#3fb950">4.8s</text>
+  <text x="668" y="160" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" fill="#8b949e">CreateVolume p95</text>
+  <rect x="22" y="186" width="428" height="188" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="38" y="204" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#e6edf3">Operation latency — p50 / p95 / p99</text>
+  <text x="340" y="204" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e">secs</text>
+  <line x1="22" y1="210" x2="450" y2="210" stroke="#30363d" stroke-width="1"/>
+  <line x1="58" y1="222" x2="436" y2="222" stroke="#21262d" stroke-width="1"/>
+  <line x1="58" y1="252" x2="436" y2="252" stroke="#21262d" stroke-width="1"/>
+  <line x1="58" y1="282" x2="436" y2="282" stroke="#21262d" stroke-width="1"/>
+  <line x1="58" y1="312" x2="436" y2="312" stroke="#21262d" stroke-width="1"/>
+  <line x1="58" y1="342" x2="436" y2="342" stroke="#21262d" stroke-width="1"/>
+  <text x="52" y="226" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" fill="#8b949e" text-anchor="end">10s</text>
+  <text x="52" y="286" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" fill="#8b949e" text-anchor="end">5s</text>
+  <text x="52" y="346" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" fill="#8b949e" text-anchor="end">0s</text>
+  <text x="62" y="360" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" fill="#8b949e">-55m</text>
+  <text x="248" y="360" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" fill="#8b949e">-15m</text>
+  <text x="418" y="360" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" fill="#8b949e">now</text>
+  <polyline fill="none" stroke="#f85149" stroke-width="2" points="62,258 95,262 128,256 161,260 194,265 227,259 260,263 293,257 326,261 359,257 392,261 432,258"/>
+  <polyline fill="none" stroke="#d29922" stroke-width="2" points="62,298 95,302 128,296 161,300 194,305 227,299 260,302 293,297 326,301 359,297 392,301 432,298"/>
+  <polyline fill="none" stroke="#3fb950" stroke-width="2" points="62,334 95,336 128,333 161,335 194,338 227,334 260,336 293,333 326,335 359,333 392,335 432,334"/>
+  <circle cx="64" cy="372" r="4" fill="#3fb950"/>
+  <text x="72" y="376" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e">p50</text>
+  <circle cx="104" cy="372" r="4" fill="#d29922"/>
+  <text x="112" y="376" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e">p95</text>
+  <circle cx="144" cy="372" r="4" fill="#f85149"/>
+  <text x="152" y="376" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e">p99</text>
+  <rect x="460" y="186" width="418" height="188" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="476" y="204" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#e6edf3">Operations per minute by method</text>
+  <line x1="460" y1="210" x2="878" y2="210" stroke="#30363d" stroke-width="1"/>
+  <text x="578" y="229" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e" text-anchor="end">Attach</text>
+  <rect x="582" y="218" width="196" height="14" rx="3" fill="#58a6ff"/>
+  <text x="782" y="229" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#58a6ff"> 4.5</text>
+  <text x="578" y="250" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e" text-anchor="end">Detach</text>
+  <rect x="582" y="239" width="183" height="14" rx="3" fill="#58a6ff"/>
+  <text x="769" y="250" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#58a6ff"> 4.2</text>
+  <text x="578" y="271" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e" text-anchor="end">CreateVolume</text>
+  <rect x="582" y="260" width="139" height="14" rx="3" fill="#58a6ff"/>
+  <text x="725" y="271" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#58a6ff"> 3.2</text>
+  <text x="578" y="292" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e" text-anchor="end">DeleteVolume</text>
+  <rect x="582" y="281" width="122" height="14" rx="3" fill="#58a6ff"/>
+  <text x="708" y="292" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#58a6ff"> 2.8</text>
+  <text x="578" y="313" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e" text-anchor="end">ListVolumes</text>
+  <rect x="582" y="302" width="109" height="14" rx="3" fill="#58a6ff"/>
+  <text x="695" y="313" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#58a6ff"> 2.5</text>
+  <text x="578" y="334" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e" text-anchor="end">ExpandVolume</text>
+  <rect x="582" y="323" width="48" height="14" rx="3" fill="#58a6ff"/>
+  <text x="634" y="334" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#58a6ff"> 1.1</text>
+  <text x="578" y="355" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#8b949e" text-anchor="end">CreateSnapshot</text>
+  <rect x="582" y="344" width="35" height="14" rx="3" fill="#58a6ff"/>
+  <text x="621" y="355" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#58a6ff"> 0.8</text>
+  <rect x="22" y="386" width="856" height="160" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="38" y="404" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#e6edf3">Per-Method Summary — last 5 min</text>
+  <line x1="22" y1="410" x2="878" y2="410" stroke="#30363d" stroke-width="1"/>
+  <rect x="22" y="410" width="856" height="22" fill="#1c2128"/>
+  <text x="38" y="424" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" font-weight="500" fill="#8b949e">METHOD</text>
+  <text x="390" y="424" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" font-weight="500" fill="#8b949e" text-anchor="end">OPS / MIN</text>
+  <text x="500" y="424" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" font-weight="500" fill="#8b949e" text-anchor="end">ERROR %</text>
+  <text x="630" y="424" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" font-weight="500" fill="#8b949e" text-anchor="end">P95 LATENCY</text>
+  <text x="760" y="424" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" font-weight="500" fill="#8b949e" text-anchor="middle">STATUS</text>
+  <line x1="22" y1="432" x2="878" y2="432" stroke="#30363d" stroke-width="1"/>
+  <text x="38" y="448" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3">Attach</text>
+  <text x="390" y="448" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">4.5</text>
+  <text x="500" y="448" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#3fb950" text-anchor="end">1.1%</text>
+  <text x="630" y="448" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">3.9s</text>
+  <rect x="720" y="438" width="78" height="15" rx="7" fill="#3fb95010" stroke="#3fb95040" stroke-width="1"/>
+  <text x="759" y="449" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#3fb950" text-anchor="middle">OK</text>
+  <line x1="22" y1="456" x2="878" y2="456" stroke="#21262d" stroke-width="1"/>
+  <text x="38" y="471" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3">Detach</text>
+  <text x="390" y="471" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">4.2</text>
+  <text x="500" y="471" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#3fb950" text-anchor="end">0.9%</text>
+  <text x="630" y="471" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">3.5s</text>
+  <rect x="720" y="461" width="78" height="15" rx="7" fill="#3fb95010" stroke="#3fb95040" stroke-width="1"/>
+  <text x="759" y="472" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#3fb950" text-anchor="middle">OK</text>
+  <line x1="22" y1="479" x2="878" y2="479" stroke="#21262d" stroke-width="1"/>
+  <text x="38" y="494" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3">CreateVolume</text>
+  <text x="390" y="494" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">3.2</text>
+  <text x="500" y="494" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#3fb950" text-anchor="end">1.8%</text>
+  <text x="630" y="494" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">4.8s</text>
+  <rect x="720" y="484" width="78" height="15" rx="7" fill="#3fb95010" stroke="#3fb95040" stroke-width="1"/>
+  <text x="759" y="495" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#3fb950" text-anchor="middle">OK</text>
+  <line x1="22" y1="502" x2="878" y2="502" stroke="#21262d" stroke-width="1"/>
+  <text x="38" y="517" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3">ExpandVolume</text>
+  <text x="390" y="517" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">1.1</text>
+  <text x="500" y="517" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#3fb950" text-anchor="end">1.5%</text>
+  <text x="630" y="517" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">5.2s</text>
+  <rect x="720" y="507" width="78" height="15" rx="7" fill="#3fb95010" stroke="#3fb95040" stroke-width="1"/>
+  <text x="759" y="518" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#3fb950" text-anchor="middle">OK</text>
+  <line x1="22" y1="525" x2="878" y2="525" stroke="#21262d" stroke-width="1"/>
+  <text x="38" y="540" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3">CreateSnapshot</text>
+  <text x="390" y="540" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">0.8</text>
+  <text x="500" y="540" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#3fb950" text-anchor="end">2.1%</text>
+  <text x="630" y="540" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" fill="#e6edf3" text-anchor="end">6.8s</text>
+  <rect x="720" y="530" width="78" height="15" rx="7" fill="#3fb95010" stroke="#3fb95040" stroke-width="1"/>
+  <text x="759" y="541" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="10" fill="#3fb950" text-anchor="middle">OK</text>
+  <text x="38" y="556" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="9" fill="#484f58">Source: csi_sidecar_operations_seconds · labels: driver_name, grpc_status_code, method_name · standard Kubernetes CSI sidecars</text>
+</svg>

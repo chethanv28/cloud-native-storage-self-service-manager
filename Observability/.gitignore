@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Node / UI build
+ui/node_modules/
+ui/dist/
+ui/.env
+ui/.env.local
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Grafana admin password override — do not commit
+deploy/grafana/secret.local.yaml

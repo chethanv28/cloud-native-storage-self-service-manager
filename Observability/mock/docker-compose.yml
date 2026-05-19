@@ -1,0 +1,61 @@
+services:
+
+  # ── Mock exporter ──────────────────────────────────────────────────────────
+  # Simulates a CSI driver's Prometheus endpoints.
+  #
+  # DRIVER=generic  →  emits only standard csi_sidecar_operations_seconds on :9809
+  # DRIVER=vsphere  →  also emits vSphere-specific metrics on :2112 and :2113
+  #
+  # Change SCENARIO to: normal | degraded | failing
+  mock-exporter:
+    build:
+      context: ./mock-exporter
+    ports:
+      - "9809:9809"   # Standard CSI sidecar metrics
+      - "2112:2112"   # vSphere controller extras (DRIVER=vsphere only)
+      - "2113:2113"   # vSphere syncer extras     (DRIVER=vsphere only)
+    environment:
+      - DRIVER=vsphere        # generic | vsphere
+      - SCENARIO=normal       # normal  | degraded | failing
+      - DRIVER_NAME=csi.vsphere.vmware.com
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:9809/metrics')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ── Prometheus ─────────────────────────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus-mock.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=2d"
+      - "--web.enable-lifecycle"
+    depends_on:
+      mock-exporter:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── Grafana ────────────────────────────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:11.4.0
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=changeme
+      - GF_ANALYTICS_REPORTING_ENABLED=false
+    volumes:
+      - ./grafana-provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana-provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ../dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+    restart: unless-stopped

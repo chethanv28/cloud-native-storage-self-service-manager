@@ -27,3 +27,15 @@ go.work.sum
 # env file
 .env
 
+# macOS
+.DS_Store
+
+# Node / UI build (Observability/ui/)
+**/node_modules/
+**/dist/
+
+# Python (Observability/mock/)
+__pycache__/
+*.pyc
+.venv/
+

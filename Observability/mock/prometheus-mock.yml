@@ -1,0 +1,22 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Standard CSI sidecar metrics — works for any CSI driver
+  - job_name: csi-driver-sidecars
+    static_configs:
+      - targets: ['mock-exporter:9809']
+        labels: { component: csi-sidecars, env: mock }
+
+  # vSphere-specific extras — only active when DRIVER=vsphere in docker-compose
+  # Comment out both jobs below if testing a different driver
+  - job_name: vsphere-csi-controller
+    static_configs:
+      - targets: ['mock-exporter:2112']
+        labels: { component: vsphere-csi-controller, env: mock }
+
+  - job_name: vsphere-csi-syncer
+    static_configs:
+      - targets: ['mock-exporter:2113']
+        labels: { component: vsphere-csi-syncer, env: mock }

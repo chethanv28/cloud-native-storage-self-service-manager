@@ -1,0 +1,404 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    { "type": "grafana",    "id": "grafana",    "name": "Grafana",     "version": "9.0.0" },
+    { "type": "datasource", "id": "prometheus", "name": "Prometheus",  "version": "1.0.0" },
+    { "type": "panel",      "id": "stat",       "name": "Stat",        "version": "" },
+    { "type": "panel",      "id": "timeseries", "name": "Time series", "version": "" },
+    { "type": "panel",      "id": "table",      "name": "Table",       "version": "" }
+  ],
+  "annotations": { "list": [] },
+  "description": "Standard CSI driver operations dashboard. Works with any Kubernetes CSI driver that uses the standard sidecar containers (external-provisioner, external-attacher, external-resizer, external-snapshotter). Metric: csi_sidecar_operations_seconds.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "panels": [
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 100,
+      "title": "📊 Operations Overview",
+      "type": "row"
+    },
+
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "Total volume operation calls per second across all CSI drivers and method types (last 5 m).",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "blue", "value": null },
+            { "color": "green", "value": 0.1 }
+          ]},
+          "unit": "reqps", "mappings": []
+        }
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 1 },
+      "id": 1,
+      "options": {
+        "colorMode": "background", "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      },
+      "title": "Total Op Rate",
+      "type": "stat",
+      "targets": [{
+        "datasource": "${DS_PROMETHEUS}",
+        "expr": "sum(rate(csi_sidecar_operations_seconds_count[5m]))",
+        "legendFormat": "ops/s", "refId": "A"
+      }]
+    },
+
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "Percentage of CSI operations that returned a non-OK gRPC status code (last 5 m). Yellow ≥ 5 %, Red ≥ 15 %.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green",  "value": null },
+            { "color": "yellow", "value": 5   },
+            { "color": "red",    "value": 15  }
+          ]},
+          "unit": "percent", "min": 0, "max": 100, "mappings": []
+        }
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 1 },
+      "id": 2,
+      "options": {
+        "colorMode": "background", "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      },
+      "title": "Error Rate",
+      "type": "stat",
+      "targets": [{
+        "datasource": "${DS_PROMETHEUS}",
+        "expr": "100 * sum(rate(csi_sidecar_operations_seconds_count{grpc_status_code!=\"OK\"}[5m])) / sum(rate(csi_sidecar_operations_seconds_count[5m]))",
+        "legendFormat": "error %", "refId": "A"
+      }]
+    },
+
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "Number of distinct CSI driver names currently emitting metrics.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "blue", "value": null }]},
+          "unit": "short", "mappings": []
+        }
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 1 },
+      "id": 3,
+      "options": {
+        "colorMode": "value", "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      },
+      "title": "Active CSI Drivers",
+      "type": "stat",
+      "targets": [{
+        "datasource": "${DS_PROMETHEUS}",
+        "expr": "count(count by(driver_name) (csi_sidecar_operations_seconds_count))",
+        "legendFormat": "drivers", "refId": "A"
+      }]
+    },
+
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "p95 latency of the CreateVolume operation (last 5 m). This is the operation that blocks PVC binding.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green",  "value": null },
+            { "color": "yellow", "value": 15  },
+            { "color": "red",    "value": 30  }
+          ]},
+          "unit": "s", "mappings": []
+        }
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 1 },
+      "id": 4,
+      "options": {
+        "colorMode": "background", "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      },
+      "title": "CreateVolume p95 Latency",
+      "type": "stat",
+      "targets": [{
+        "datasource": "${DS_PROMETHEUS}",
+        "expr": "histogram_quantile(0.95, sum by(le) (rate(csi_sidecar_operations_seconds_bucket{method_name=~\".*/CreateVolume\", grpc_status_code=\"OK\"}[5m])))",
+        "legendFormat": "p95", "refId": "A"
+      }]
+    },
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "id": 101,
+      "title": "⏱ Operation Latency",
+      "type": "row"
+    },
+
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "95th-percentile latency per CSI method (successful operations only). Method names follow the gRPC CSI spec: /csi.v1.Controller/CreateVolume, /csi.v1.Controller/ControllerPublishVolume (attach), etc.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "drawStyle": "line", "fillOpacity": 10,
+            "lineInterpolation": "smooth", "lineWidth": 2,
+            "showPoints": "never", "spanNulls": true
+          },
+          "unit": "s", "mappings": []
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+      "id": 5,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "CSI Operation Latency — p95 by Method (5 m)",
+      "type": "timeseries",
+      "targets": [{
+        "datasource": "${DS_PROMETHEUS}",
+        "expr": "histogram_quantile(0.95, sum by(le, method_name) (rate(csi_sidecar_operations_seconds_bucket{grpc_status_code=\"OK\"}[5m])))",
+        "legendFormat": "{{method_name}}", "refId": "A"
+      }]
+    },
+
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "p50 / p95 / p99 latency for all operations combined. Shows overall storage responsiveness.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "drawStyle": "line", "fillOpacity": 8,
+            "lineInterpolation": "smooth", "lineWidth": 2,
+            "showPoints": "never", "spanNulls": true
+          },
+          "unit": "s", "mappings": []
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+      "id": 6,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "title": "Overall Latency Distribution — p50 / p95 / p99 (5 m)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "expr": "histogram_quantile(0.50, sum by(le) (rate(csi_sidecar_operations_seconds_bucket{grpc_status_code=\"OK\"}[5m])))",
+          "legendFormat": "p50", "refId": "A"
+        },
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "expr": "histogram_quantile(0.95, sum by(le) (rate(csi_sidecar_operations_seconds_bucket{grpc_status_code=\"OK\"}[5m])))",
+          "legendFormat": "p95", "refId": "B"
+        },
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "expr": "histogram_quantile(0.99, sum by(le) (rate(csi_sidecar_operations_seconds_bucket{grpc_status_code=\"OK\"}[5m])))",
+          "legendFormat": "p99", "refId": "C"
+        }
+      ]
+    },
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "id": 102,
+      "title": "🔴 Error Analysis",
+      "type": "row"
+    },
+
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "Errors per minute broken down by gRPC status code. Use this to distinguish storage faults (Unknown, Internal, Unavailable) from permission issues (PermissionDenied) from client bugs (InvalidArgument).",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "drawStyle": "line", "fillOpacity": 20,
+            "lineWidth": 2, "showPoints": "never", "spanNulls": true,
+            "stacking": { "group": "A", "mode": "none" }
+          },
+          "unit": "short", "mappings": []
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 15 },
+      "id": 7,
+      "options": {
+        "legend": { "calcs": ["sum"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "Errors by gRPC Status Code (per min)",
+      "type": "timeseries",
+      "targets": [{
+        "datasource": "${DS_PROMETHEUS}",
+        "expr": "sum by(grpc_status_code) (rate(csi_sidecar_operations_seconds_count{grpc_status_code!=\"OK\"}[5m])) * 60",
+        "legendFormat": "{{grpc_status_code}}", "refId": "A"
+      }]
+    },
+
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "Errors per minute per CSI method. High failures on ControllerPublishVolume (attach) or CreateVolume block pod scheduling.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "drawStyle": "bars", "fillOpacity": 80,
+            "lineWidth": 1, "showPoints": "never", "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" }
+          },
+          "unit": "short", "mappings": []
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 15 },
+      "id": 8,
+      "options": {
+        "legend": { "calcs": ["sum"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "Errors by CSI Method (stacked, per min)",
+      "type": "timeseries",
+      "targets": [{
+        "datasource": "${DS_PROMETHEUS}",
+        "expr": "sum by(method_name) (rate(csi_sidecar_operations_seconds_count{grpc_status_code!=\"OK\"}[5m])) * 60",
+        "legendFormat": "{{method_name}}", "refId": "A"
+      }]
+    },
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 23 },
+      "id": 103,
+      "title": "📋 Operation Summary",
+      "type": "row"
+    },
+
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "Per-driver, per-method summary: calls per minute, error rate, and p95 latency over the last 5 minutes. Sort any column. Color-coded cells flag threshold breaches.",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "custom": { "align": "auto", "filterable": true },
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }]},
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Error %" },
+            "properties": [
+              { "id": "unit", "value": "percent" },
+              { "id": "custom.width", "value": 100 },
+              { "id": "thresholds", "value": { "mode": "absolute", "steps": [
+                { "color": "green",  "value": null },
+                { "color": "yellow", "value": 5   },
+                { "color": "red",    "value": 15  }
+              ]}},
+              { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "gradient" }}
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "p95 Latency (s)" },
+            "properties": [
+              { "id": "unit", "value": "s" },
+              { "id": "custom.width", "value": 120 },
+              { "id": "thresholds", "value": { "mode": "absolute", "steps": [
+                { "color": "green",  "value": null },
+                { "color": "yellow", "value": 15  },
+                { "color": "red",    "value": 30  }
+              ]}},
+              { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "gradient" }}
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Ops/min" },
+            "properties": [
+              { "id": "unit", "value": "short" },
+              { "id": "decimals", "value": 2 }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 24 },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": { "show": false },
+        "showHeader": true,
+        "sortBy": [{ "desc": true, "displayName": "Ops/min" }]
+      },
+      "transformations": [
+        { "id": "merge", "options": {} },
+        { "id": "organize", "options": {
+            "renameByName": {
+              "driver_name": "Driver",
+              "method_name": "Method",
+              "Value #A": "Ops/min",
+              "Value #B": "Error %",
+              "Value #C": "p95 Latency (s)"
+            },
+            "indexByName": {
+              "driver_name": 0, "method_name": 1,
+              "Value #A": 2, "Value #B": 3, "Value #C": 4
+            }
+          }
+        }
+      ],
+      "title": "Operation Summary Table (last 5 m)",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "expr": "sum by(driver_name, method_name) (rate(csi_sidecar_operations_seconds_count[5m])) * 60",
+          "legendFormat": "{{driver_name}} {{method_name}}",
+          "refId": "A", "instant": true, "format": "table"
+        },
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "expr": "100 * sum by(driver_name, method_name) (rate(csi_sidecar_operations_seconds_count{grpc_status_code!=\"OK\"}[5m])) / sum by(driver_name, method_name) (rate(csi_sidecar_operations_seconds_count[5m]))",
+          "legendFormat": "{{driver_name}} {{method_name}}",
+          "refId": "B", "instant": true, "format": "table"
+        },
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "expr": "histogram_quantile(0.95, sum by(le, driver_name, method_name) (rate(csi_sidecar_operations_seconds_bucket{grpc_status_code=\"OK\"}[5m])))",
+          "legendFormat": "{{driver_name}} {{method_name}}",
+          "refId": "C", "instant": true, "format": "table"
+        }
+      ]
+    }
+
+  ],
+  "refresh": "30s",
+  "schemaVersion": 36,
+  "tags": ["csi", "kubernetes", "storage", "operations"],
+  "templating": { "list": [] },
+  "time":      { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "CSI Driver — Operations Overview",
+  "uid": "csi-operations-v1",
+  "version": 1,
+  "weekStart": ""
+}

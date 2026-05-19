@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: csi-driver-monitoring
+  labels:
+    app: prometheus
+    app.kubernetes.io/part-of: csi-driver-observability
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval:     60s
+      evaluation_interval: 60s
+      external_labels:
+        cluster: my-cluster   # ← set to your cluster name
+
+    rule_files:
+      - /etc/prometheus/rules/rules.yml
+
+    # -------------------------------------------------------------------------
+    # HOW TO CONFIGURE YOUR CSI DRIVER TARGETS
+    #
+    # Standard Kubernetes CSI sidecars (external-provisioner, external-attacher,
+    # external-resizer, external-snapshotter) all emit the metric:
+    #
+    #   csi_sidecar_operations_seconds
+    #     labels: driver_name, grpc_status_code, method_name
+    #
+    # They expose this metric on a configurable port (set via --metrics-address
+    # flag on the sidecar container). Common conventions:
+    #   external-provisioner  → 9809
+    #   external-attacher     → 9809
+    #   external-resizer      → 9809
+    #   external-snapshotter  → 9809
+    #
+    # The driver itself may expose additional driver-specific metrics on a
+    # separate port. Consult your driver's documentation for its port and
+    # metric naming conventions.
+    #
+    # To add a driver, duplicate the job block below and fill in:
+    #   <SERVICE_NAME>   the Kubernetes Service that fronts the CSI controller pod
+    #   <NAMESPACE>      the namespace the CSI driver runs in
+    #   <PORT>           the metrics port number
+    #   <DRIVER_NAME>    a human-readable label for Grafana legends
+    #
+    # See driver-profiles/ for ready-made examples (e.g., vsphere).
+    # -------------------------------------------------------------------------
+
+    scrape_configs:
+
+      # ── Standard CSI sidecar metrics ───────────────────────────────────────
+      # Replace the target below with your driver's controller Service.
+      # This job captures csi_sidecar_operations_seconds which is emitted by
+      # the standard Kubernetes CSI sidecar containers and works for ANY CSI
+      # driver that uses them.
+      - job_name: csi-driver-sidecars
+        scrape_interval: 60s
+        static_configs:
+          - targets:
+              # Format: <service-name>.<namespace>.svc.cluster.local:<port>
+              # Example (replace with your values):
+              - <YOUR_CSI_SERVICE>.<YOUR_NAMESPACE>.svc.cluster.local:<SIDECAR_METRICS_PORT>
+            labels:
+              component: csi-sidecars
+
+      # ── Driver-specific metrics (optional) ─────────────────────────────────
+      # If your CSI driver exposes its own additional metrics on a separate
+      # port, add a second job here. Comment out if not applicable.
+      #
+      # - job_name: csi-driver-custom
+      #   scrape_interval: 60s
+      #   static_configs:
+      #     - targets:
+      #         - <YOUR_CSI_SERVICE>.<YOUR_NAMESPACE>.svc.cluster.local:<DRIVER_METRICS_PORT>
+      #       labels:
+      #         component: csi-driver
+
+  rules.yml: |
+    groups:
+      - name: csi_driver_recording_rules
+        interval: 60s
+        rules:
+          # p50 / p95 / p99 operation latency (successful calls), by method
+          - record: job:csi_sidecar_ops_p50:rate5m
+            expr: |
+              histogram_quantile(0.50, sum by(le, method_name, driver_name) (
+                rate(csi_sidecar_operations_seconds_bucket{grpc_status_code="OK"}[5m])))
+          - record: job:csi_sidecar_ops_p95:rate5m
+            expr: |
+              histogram_quantile(0.95, sum by(le, method_name, driver_name) (
+                rate(csi_sidecar_operations_seconds_bucket{grpc_status_code="OK"}[5m])))
+          - record: job:csi_sidecar_ops_p99:rate5m
+            expr: |
+              histogram_quantile(0.99, sum by(le, method_name, driver_name) (
+                rate(csi_sidecar_operations_seconds_bucket{grpc_status_code="OK"}[5m])))
+
+          # Error rate = non-OK gRPC status codes / total calls
+          - record: job:csi_sidecar_error_rate:rate5m
+            expr: |
+              sum by(method_name, driver_name, grpc_status_code) (
+                rate(csi_sidecar_operations_seconds_count{grpc_status_code!="OK"}[5m]))
+              /
+              sum by(method_name, driver_name, grpc_status_code) (
+                rate(csi_sidecar_operations_seconds_count[5m]))

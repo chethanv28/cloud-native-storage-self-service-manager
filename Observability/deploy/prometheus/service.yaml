@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: csi-driver-monitoring
+  labels:
+    app: prometheus
+    app.kubernetes.io/part-of: csi-driver-observability
+spec:
+  type: NodePort
+  ports:
+    - name: web
+      port: 9090
+      targetPort: 9090
+      nodePort: 30090
+  selector:
+    app: prometheus

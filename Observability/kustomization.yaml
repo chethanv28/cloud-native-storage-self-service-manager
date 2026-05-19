@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deploy/namespace.yaml
+  - deploy/prometheus/rbac.yaml
+  - deploy/prometheus/configmap.yaml
+  - deploy/prometheus/deployment.yaml
+  - deploy/prometheus/service.yaml
+  - deploy/grafana/secret.yaml
+  - deploy/grafana/datasource-cm.yaml
+  - deploy/grafana/dashboard-provider-cm.yaml
+  - deploy/grafana/deployment.yaml
+  - deploy/grafana/service.yaml
+
+# Bundles all JSON files from dashboards/ into the grafana-dashboards ConfigMap.
+# The standard CSI Operations dashboard is committed here.
+# Driver-specific dashboards are added by copying them into dashboards/ from
+# the appropriate driver-profiles/<driver>/dashboards/ directory.
+configMapGenerator:
+  - name: grafana-dashboards
+    namespace: csi-driver-monitoring
+    files:
+      - dashboards/CSI-Operations-Dashboard-v1.0.json
+      - dashboards/CSI-Custom-Template-v1.0.json
+    options:
+      disableNameSuffixHash: true
+      labels:
+        app: grafana
+        app.kubernetes.io/part-of: csi-driver-observability

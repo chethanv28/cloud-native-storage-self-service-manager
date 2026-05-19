@@ -1,0 +1,264 @@
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+.dash-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dash-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin-bottom: 4px;
+}
+
+.dash-subtitle {
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.dash-subtitle code {
+  background: #21262d;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 11px;
+  color: #a5f3fc;
+}
+
+/* ── Scenario pills ─────────────────────────────────────────────────────── */
+
+.scenario-pills {
+  display: flex;
+  gap: 6px;
+}
+
+.pill {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--pill-bg);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: color 0.1s, border-color 0.1s, background 0.1s;
+}
+
+.pill--normal.pill--active  { color: #3fb950; border-color: #3fb950; background: #3fb95018; }
+.pill--degraded.pill--active{ color: #d29922; border-color: #d29922; background: #d2992218; }
+.pill--failing.pill--active { color: #f85149; border-color: #f85149; background: #f8514918; }
+.pill:hover:not(.pill--active) { color: var(--text-1); border-color: #58a6ff; }
+
+/* ── Alert banner ───────────────────────────────────────────────────────── */
+
+.alert-banner {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  border-left: 3px solid;
+}
+
+.alert-banner--success { background: #3fb95010; border-color: #3fb950; color: #3fb950; }
+.alert-banner--warning { background: #d2992210; border-color: #d29922; color: #d29922; }
+.alert-banner--danger  { background: #f8514910; border-color: #f85149; color: #f85149; }
+
+.alert-banner strong { font-weight: 600; }
+
+/* ── KPI strip ──────────────────────────────────────────────────────────── */
+
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kpi-value {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1.1;
+}
+
+.kpi-card--success .kpi-value { color: #3fb950; }
+.kpi-card--warning .kpi-value { color: #d29922; }
+.kpi-card--danger  .kpi-value { color: #f85149; }
+
+.kpi-label {
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* ── Section cards ──────────────────────────────────────────────────────── */
+
+.section-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+}
+
+.section-card__header {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.section-card__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.section-card__sub {
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.section-card__body {
+  padding: 16px;
+}
+
+/* ── Charts row ─────────────────────────────────────────────────────────── */
+
+.charts-row {
+  display: flex;
+  gap: 16px;
+}
+
+.charts-row > * { flex: 1; min-width: 0; }
+
+.chart-caption {
+  font-size: 11px;
+  color: var(--text-2);
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.chart-caption code {
+  background: #21262d;
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-size: 10px;
+  color: #a5f3fc;
+}
+
+.donut-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ── Summary section ────────────────────────────────────────────────────── */
+
+.summary-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.section-heading {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.table-wrap {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.summary-table thead th {
+  background: #1c2128;
+  color: var(--text-2);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.th-num    { text-align: right !important; }
+.th-center { text-align: center !important; }
+
+.summary-table tbody tr { border-bottom: 1px solid #21262d; }
+.summary-table tbody tr:last-child { border-bottom: none; }
+
+.summary-table td { padding: 8px 12px; color: var(--text-1); }
+
+.summary-row--danger  { background: #f8514908; }
+.summary-row--warning { background: #d2992208; }
+
+.summary-method { font-weight: 500; }
+.summary-num    { text-align: right; font-variant-numeric: tabular-nums; }
+
+.summary-pct--success { color: #3fb950; }
+.summary-pct--warning { color: #d29922; }
+.summary-pct--danger  { color: #f85149; }
+
+.summary-lat--success { color: var(--text-1); }
+.summary-lat--warning { color: #d29922; }
+.summary-lat--danger  { color: #f85149; }
+
+/* ── Status badge ───────────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid;
+}
+
+.badge--success { color: #3fb950; border-color: #3fb95040; background: #3fb95010; }
+.badge--warning { color: #d29922; border-color: #d2992240; background: #d2992210; }
+.badge--danger  { color: #f85149; border-color: #f8514940; background: #f8514910; }
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 800px) {
+  .kpi-strip   { grid-template-columns: repeat(2, 1fr); }
+  .charts-row  { flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+  .kpi-strip   { grid-template-columns: 1fr; }
+  .dash-header { flex-direction: column; }
+}
